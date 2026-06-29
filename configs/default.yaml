@@ -1,0 +1,65 @@
+# Catalyst LoRA - single source of configuration.
+# The injector (model.py), trainer (train.py), evaluator (evaluate.py),
+# and experiment runner (experiments.py) all read this file. Changing the
+# model only happens by editing model_name here; nothing switches it
+# automatically.
+
+# Hugging Face decoder-only transformer to adapt. Default GPT-2 124M.
+model_name: gpt2
+
+# Logical adapter targets the injector resolves to concrete projections.
+# Supported values: q, k, v, o, mlp. Empty falls back to [q, v].
+targets:
+  - q
+  - v
+
+# LoRA scaling. Effective update is scaled by alpha / rank.
+alpha: 16.0
+
+# Default rank applied to any layer not named explicitly in rank_by_layer.
+default_rank: 8
+
+# Per-layer rank allocation, keyed by layer index. GPT-2 124M has 12
+# transformer blocks (indices 0-11). The default schedule is uniform rank 8
+# at every layer; experiments override this with progressive and inverse
+# schedules at an approximately equal parameter budget.
+rank_by_layer:
+  0: 8
+  1: 8
+  2: 8
+  3: 8
+  4: 8
+  5: 8
+  6: 8
+  7: 8
+  8: 8
+  9: 8
+  10: 8
+  11: 8
+
+# Training controls.
+max_steps: 200
+batch_size: 8
+
+# Single seed applied to torch, numpy, and the Python random module (and to
+# torch.cuda when CUDA is available), then logged in the metadata record.
+seed: 42
+
+# Inference latency measurement: warm-up generations are discarded, timed
+# generations are measured (Requirement 13.3).
+latency:
+  warmup: 5
+  timed: 50
+
+# Deterministic decoding defaults so BLEU, ROUGE-L, and latency are
+# reproducible across runs (Requirement 13.4, 20.3). temperature 0.0 with
+# top_k disabled and top_p 1.0 maps to greedy decoding (do_sample=False).
+decoding:
+  temperature: 0.0
+  top_k: 0
+  top_p: 1.0
+  max_new_tokens: 30
+
+# Maximum allowed runtime. The startup estimator warns when the projected
+# total for all five experiments exceeds this budget (Requirement 9.5, 12.2).
+runtime_budget_minutes: 45

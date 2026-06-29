@@ -1,0 +1,60 @@
+{
+  "experiment": 4,
+  "config_snapshot": {
+    "model_name": "gpt2",
+    "targets": [
+      "q",
+      "v"
+    ],
+    "alpha": 16.0,
+    "default_rank": 8,
+    "rank_by_layer": {
+      "0": 8,
+      "1": 8,
+      "2": 8,
+      "3": 8,
+      "4": 8,
+      "5": 8,
+      "6": 8,
+      "7": 8,
+      "8": 8,
+      "9": 8,
+      "10": 8,
+      "11": 8
+    },
+    "max_steps": 30,
+    "batch_size": 8,
+    "seed": 42,
+    "latency": {
+      "warmup": 5,
+      "timed": 50
+    },
+    "decoding": {
+      "temperature": 0.0,
+      "top_k": 0,
+      "top_p": 1.0,
+      "max_new_tokens": 30
+    },
+    "runtime_budget_minutes": 45,
+    "eval_examples": 16,
+    "latency_warmup": 2,
+    "latency_timed": 5,
+    "memory_samples": 2
+  },
+  "config_sha256": "4893089175d8e5d78edd728b756ca989764e9e204ee4c8c1e5a7c8807fcd6ac1",
+  "seeds": {
+    "torch": 42,
+    "numpy": 42,
+    "random": 42
+  },
+  "git_commit": "unavailable",
+  "python_version": "3.14.2",
+  "pytorch_version": "2.10.0+cpu",
+  "hardware": {
+    "cpu_model": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+    "total_ram_bytes": 8259358720
+  },
+  "timestamp": "2026-06-28T18:31:24.884492+00:00",
+  "tokenizer_name": "gpt2",
+  "tokenizer_vocab_size": null
+}

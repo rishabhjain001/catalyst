@@ -1,0 +1,56 @@
+# Continuous integration for the Catalyst LoRA package.
+#
+# Runs on every push and pull request: formatting check, lint, then the test
+# suite (smoke tests first, then the full unit + property suite).
+#
+# Python version rationale:
+#   requirements.txt pins torch==2.2.0 / transformers==4.38.2. Those versions
+#   only publish wheels up to Python 3.11/3.12 and have NO wheels for 3.13+.
+#   Python 3.11 installs the entire pinned set cleanly, so CI standardises on
+#   3.11 to keep `pip install -r requirements.txt` reproducible. (Local
+#   development may use a newer stack, but CI deliberately exercises the pinned,
+#   reproducible environment.)
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          # Dev tools used only by the CI steps below; kept out of
+          # requirements.txt so the runtime pin set stays minimal.
+          pip install black==24.2.0 ruff==0.3.0 pytest==8.0.0
+
+      - name: Formatting check
+        run: black --check .
+
+      - name: Lint
+        run: ruff check .
+
+      - name: Smoke tests
+        # Fast, network-free structural checks; fail early before the slow suite.
+        run: pytest tests/test_layout_smoke.py tests/test_no_server_smoke.py tests/test_coding_standards_smoke.py
+
+      - name: Unit and property tests
+        # Runs the remaining unit tests plus the hypothesis property tests.
+        # Note: some tests download gpt2 / SST-2 over the network. GitHub-hosted
+        # runners have outbound network, so these run by default; in a restricted
+        # environment they would need to be deselected or marked to skip.
+        run: pytest --ignore=tests/test_layout_smoke.py --ignore=tests/test_no_server_smoke.py --ignore=tests/test_coding_standards_smoke.py

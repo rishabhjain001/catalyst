@@ -1,0 +1,255 @@
+{
+  "experiment": 2,
+  "status": "completed",
+  "start_time": "2026-06-28T18:05:25.787542+00:00",
+  "end_time": "2026-06-28T18:19:07.162375+00:00",
+  "duration_seconds": 821.374833,
+  "metrics": {
+    "by_rank": {
+      "4": {
+        "validation_loss": 2.6974745988845825,
+        "perplexity": 14.842201842726881,
+        "bleu": 0.3597857444721598,
+        "rouge_l": 0.10707862986902694,
+        "sentiment_accuracy": 0.0,
+        "trainable_params": 147456,
+        "trainable_percent": 0.11835559692522021,
+        "training_time_seconds": null,
+        "peak_ram_mb": 1369.28125,
+        "avg_ram_mb": 1096.9623697916666,
+        "checkpoint_size_bytes": 498412763,
+        "adapter_size_bytes": 617164,
+        "inference_memory": {
+          "base": {
+            "condition": "base",
+            "peak_ram_mb": 1381.7734375,
+            "avg_ram_mb": 1336.01171875
+          },
+          "unmerged": {
+            "condition": "unmerged",
+            "peak_ram_mb": 1381.77734375,
+            "avg_ram_mb": 1381.3138020833333
+          },
+          "merged": {
+            "condition": "merged",
+            "peak_ram_mb": 1380.82421875,
+            "avg_ram_mb": 1063.8098958333333
+          },
+          "post_swap": {
+            "condition": "post_swap",
+            "peak_ram_mb": 1050.2265625,
+            "avg_ram_mb": 1000.6028645833334
+          }
+        },
+        "inference_latency": {
+          "base": {
+            "mean": 3.2034540400003606,
+            "median": 3.0279262000003655,
+            "p95": 3.768735980000929,
+            "stddev": 0.41165847478986156,
+            "tokens_per_second": 9.364891653009831
+          },
+          "unmerged": {
+            "mean": 0.8432455200007098,
+            "median": 1.0091659000008804,
+            "p95": 1.244978500000434,
+            "stddev": 0.43719521734452016,
+            "tokens_per_second": 8.301259637874042
+          },
+          "merged": {
+            "mean": 1.262724779999553,
+            "median": 1.2967968999982986,
+            "p95": 2.0220437999996648,
+            "stddev": 0.6442651715030399,
+            "tokens_per_second": 8.55293265093271
+          },
+          "post_swap": {
+            "mean": 0.7196713399996952,
+            "median": 0.4114702999995643,
+            "p95": 1.5469908400005805,
+            "stddev": 0.6261795711018664,
+            "tokens_per_second": 9.448757539799876
+          }
+        },
+        "gemini": {
+          "label": "LLM-based qualitative evaluation",
+          "supplementary": true,
+          "sample_count": 10,
+          "sentiment_coherence": 0.0,
+          "fluency": 0.0,
+          "prompt_adherence": 0.0
+        },
+        "throughput": 5.190692196248588,
+        "failures": [
+          {
+            "metric": "training_time_seconds",
+            "reason": "training_time_seconds not supplied by the training run"
+          }
+        ]
+      },
+      "8": {
+        "validation_loss": 2.560830235481262,
+        "perplexity": 12.946561549562558,
+        "bleu": 0.2583911425352682,
+        "rouge_l": 0.0822906312607716,
+        "sentiment_accuracy": 0.0,
+        "trainable_params": 294912,
+        "trainable_percent": 0.23643136409814366,
+        "training_time_seconds": null,
+        "peak_ram_mb": 1401.16796875,
+        "avg_ram_mb": 1117.265234375,
+        "checkpoint_size_bytes": 499002587,
+        "adapter_size_bytes": 1206988,
+        "inference_memory": {
+          "base": {
+            "condition": "base",
+            "peak_ram_mb": 978.69921875,
+            "avg_ram_mb": 820.3606770833334
+          },
+          "unmerged": {
+            "condition": "unmerged",
+            "peak_ram_mb": 978.71484375,
+            "avg_ram_mb": 977.5950520833334
+          },
+          "merged": {
+            "condition": "merged",
+            "peak_ram_mb": 1451.1171875,
+            "avg_ram_mb": 1292.87109375
+          },
+          "post_swap": {
+            "condition": "post_swap",
+            "peak_ram_mb": 1923.06640625,
+            "avg_ram_mb": 1765.5403645833333
+          }
+        },
+        "inference_latency": {
+          "base": {
+            "mean": 2.865822340000159,
+            "median": 2.890510400000494,
+            "p95": 3.129540700000143,
+            "stddev": 0.2514929804757545,
+            "tokens_per_second": 10.468199504648407
+          },
+          "unmerged": {
+            "mean": 0.6775361800002428,
+            "median": 0.38337350000074366,
+            "p95": 1.335390680000637,
+            "stddev": 0.536458034193641,
+            "tokens_per_second": 9.150802839780123
+          },
+          "merged": {
+            "mean": 0.6057651199997054,
+            "median": 0.5451157999996212,
+            "p95": 1.1075547999997069,
+            "stddev": 0.3755519616833077,
+            "tokens_per_second": 5.61273650090922
+          },
+          "post_swap": {
+            "mean": 1.659190299999682,
+            "median": 1.2252422999990813,
+            "p95": 3.916465999999854,
+            "stddev": 1.6583887850212589,
+            "tokens_per_second": 6.147576923516221
+          }
+        },
+        "gemini": {
+          "label": "LLM-based qualitative evaluation",
+          "supplementary": true,
+          "sample_count": 10,
+          "sentiment_coherence": 0.0,
+          "fluency": 0.0,
+          "prompt_adherence": 0.0
+        },
+        "throughput": 4.454139895505142,
+        "failures": [
+          {
+            "metric": "training_time_seconds",
+            "reason": "training_time_seconds not supplied by the training run"
+          }
+        ]
+      },
+      "16": {
+        "validation_loss": 2.5760793685913086,
+        "perplexity": 13.145498341778517,
+        "bleu": 1.1496678740351354,
+        "rouge_l": 0.12213347121145107,
+        "sentiment_accuracy": 0.0,
+        "trainable_params": 589824,
+        "trainable_percent": 0.4717473694555863,
+        "training_time_seconds": null,
+        "peak_ram_mb": 1103.16796875,
+        "avg_ram_mb": 712.201171875,
+        "checkpoint_size_bytes": 500182235,
+        "adapter_size_bytes": 2386636,
+        "inference_memory": {
+          "base": {
+            "condition": "base",
+            "peak_ram_mb": 975.1640625,
+            "avg_ram_mb": 816.5833333333334
+          },
+          "unmerged": {
+            "condition": "unmerged",
+            "peak_ram_mb": 975.95703125,
+            "avg_ram_mb": 975.01171875
+          },
+          "merged": {
+            "condition": "merged",
+            "peak_ram_mb": 1453.55859375,
+            "avg_ram_mb": 1253.1653645833333
+          },
+          "post_swap": {
+            "condition": "post_swap",
+            "peak_ram_mb": 1332.34765625,
+            "avg_ram_mb": 1118.5716145833333
+          }
+        },
+        "inference_latency": {
+          "base": {
+            "mean": 5.767170880000049,
+            "median": 5.741630100001203,
+            "p95": 6.937456899999233,
+            "stddev": 1.0325507364293296,
+            "tokens_per_second": 5.201857309974444
+          },
+          "unmerged": {
+            "mean": 1.6222494399997232,
+            "median": 1.3066546999998536,
+            "p95": 3.5117947399998224,
+            "stddev": 1.40361306362178,
+            "tokens_per_second": 5.424566520424567
+          },
+          "merged": {
+            "mean": 2.471564440000293,
+            "median": 1.0852972000011505,
+            "p95": 5.932063720000223,
+            "stddev": 2.5662402451310276,
+            "tokens_per_second": 4.046020341674286
+          },
+          "post_swap": {
+            "mean": 4.177326940000421,
+            "median": 1.9186348999992333,
+            "p95": 11.207483340001271,
+            "stddev": 5.111851559859264,
+            "tokens_per_second": 2.345997845215106
+          }
+        },
+        "gemini": {
+          "label": "LLM-based qualitative evaluation",
+          "supplementary": true,
+          "sample_count": 10,
+          "sentiment_coherence": 0.0,
+          "fluency": 0.0,
+          "prompt_adherence": 0.0
+        },
+        "throughput": 1.1967322949177999,
+        "failures": [
+          {
+            "metric": "training_time_seconds",
+            "reason": "training_time_seconds not supplied by the training run"
+          }
+        ]
+      }
+    }
+  },
+  "failures": []
+}

@@ -1,0 +1,25 @@
+# Catalyst LoRA pinned dependencies (Requirement 23.2)
+# Versions form a mutually compatible set around the PyTorch 2.2.x ecosystem.
+
+# Core deep learning stack
+torch==2.2.0
+transformers==4.38.2
+datasets==2.18.0
+numpy==1.26.4
+
+# Property-based testing
+hypothesis==6.98.0
+
+# System metrics and configuration
+psutil==5.9.8
+PyYAML==6.0.1
+
+# Visualization
+matplotlib==3.8.3
+
+# BLEU / ROUGE-L evaluation metrics
+sacrebleu==2.4.0
+rouge-score==0.1.2
+
+# Gemini client for the supplementary LLM judge
+google-generativeai==0.4.0

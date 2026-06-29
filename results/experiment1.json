@@ -1,0 +1,27 @@
+{
+  "experiment": 1,
+  "status": "completed",
+  "start_time": "2026-06-28T18:05:11.681034+00:00",
+  "end_time": "2026-06-28T18:05:25.681190+00:00",
+  "duration_seconds": 14.000156,
+  "metrics": {
+    "by_rank": {
+      "4": {
+        "total_params": 124587264,
+        "trainable_params": 147456,
+        "trainable_percent": 0.11835559692522021
+      },
+      "8": {
+        "total_params": 124734720,
+        "trainable_params": 294912,
+        "trainable_percent": 0.23643136409814366
+      },
+      "16": {
+        "total_params": 125029632,
+        "trainable_params": 589824,
+        "trainable_percent": 0.4717473694555863
+      }
+    }
+  },
+  "failures": []
+}

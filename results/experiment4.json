@@ -1,0 +1,107 @@
+{
+  "experiment": 4,
+  "status": "completed",
+  "start_time": "2026-06-28T18:31:24.909998+00:00",
+  "end_time": "2026-06-28T18:44:09.024039+00:00",
+  "duration_seconds": 764.114041,
+  "metrics": {
+    "merge_max_abs_diff": 6.103515625e-05,
+    "swap_detail": {
+      "active_after_positive": "positive",
+      "active_after_negative": "negative",
+      "output_max_abs_diff": 33.13495635986328
+    },
+    "swap_demonstrated": true,
+    "persistence": {
+      "saved": [
+        "positive",
+        "negative"
+      ],
+      "listed": [
+        "negative",
+        "positive"
+      ],
+      "round_trip_ok": true
+    },
+    "sentiment_by_alpha": [
+      {
+        "alpha": 0.0,
+        "sentiment_score": 0.5,
+        "text": " a great experience for the audience and the audience . "
+      },
+      {
+        "alpha": 0.25,
+        "sentiment_score": 0.5,
+        "text": " a great success , and a great movie "
+      },
+      {
+        "alpha": 0.5,
+        "sentiment_score": 0.5,
+        "text": " a great success , and a great movie "
+      },
+      {
+        "alpha": 0.75,
+        "sentiment_score": 0.5,
+        "text": " a bit of a mess , and the "
+      },
+      {
+        "alpha": 1.0,
+        "sentiment_score": 0.5,
+        "text": " a bit too much for the audience to handle."
+      }
+    ],
+    "inference_latency": {
+      "base": {
+        "mean": 9.575983120000092,
+        "median": 7.855295600000318,
+        "p95": 12.857543620000433,
+        "stddev": 2.802191702759765,
+        "tokens_per_second": 3.1328376025792024
+      },
+      "unmerged": {
+        "mean": 2.603514399999767,
+        "median": 2.1747308999983943,
+        "p95": 4.109482160000698,
+        "stddev": 1.1583747787032475,
+        "tokens_per_second": 4.301877492976802
+      },
+      "merged": {
+        "mean": 2.185675999999512,
+        "median": 2.242321300000185,
+        "p95": 3.4542448999985935,
+        "stddev": 1.0979025830056033,
+        "tokens_per_second": 4.483738669410374
+      },
+      "post_swap": {
+        "mean": 3.077151800000138,
+        "median": 3.551199900000938,
+        "p95": 3.996874280000338,
+        "stddev": 0.9327514303963703,
+        "tokens_per_second": 4.614656969473967
+      }
+    },
+    "inference_memory": {
+      "base": {
+        "condition": "base",
+        "peak_ram_mb": 1924.55859375,
+        "avg_ram_mb": 1924.25390625
+      },
+      "unmerged": {
+        "condition": "unmerged",
+        "peak_ram_mb": 1924.5,
+        "avg_ram_mb": 1923.6263020833333
+      },
+      "merged": {
+        "condition": "merged",
+        "peak_ram_mb": 1924.25,
+        "avg_ram_mb": 1923.3841145833333
+      },
+      "post_swap": {
+        "condition": "post_swap",
+        "peak_ram_mb": 1924.25,
+        "avg_ram_mb": 1923.5169270833333
+      }
+    }
+  },
+  "failures": []
+}

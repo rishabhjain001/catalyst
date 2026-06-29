@@ -1,0 +1,28 @@
+# Kiro spec documents (requirements.md, design.md, tasks.md, config) — not shipped
+.kiro/
+
+# Large training checkpoints (full model state dicts)
+checkpoints/
+
+# Saved adapter binaries produced by experiment runs (reproducible artifacts)
+results/experiment*_*/
+
+# Runtime logs
+logs/
+
+# Python caches and build artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db

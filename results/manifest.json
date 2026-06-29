@@ -1,0 +1,45 @@
+{
+  "manifest_version": 1,
+  "experiments": [
+    {
+      "experiment": 1,
+      "status": "completed",
+      "start_time": "2026-06-28T18:05:11.681034+00:00",
+      "end_time": "2026-06-28T18:05:25.681190+00:00",
+      "results_path": "results/experiment1.json",
+      "metadata_path": "results/experiment1_metadata.json"
+    },
+    {
+      "experiment": 2,
+      "status": "completed",
+      "start_time": "2026-06-28T18:05:25.787542+00:00",
+      "end_time": "2026-06-28T18:19:07.162375+00:00",
+      "results_path": "results/experiment2.json",
+      "metadata_path": "results/experiment2_metadata.json"
+    },
+    {
+      "experiment": 3,
+      "status": "completed",
+      "start_time": "2026-06-28T18:19:08.661432+00:00",
+      "end_time": "2026-06-28T18:31:24.341742+00:00",
+      "results_path": "results/experiment3.json",
+      "metadata_path": "results/experiment3_metadata.json"
+    },
+    {
+      "experiment": 4,
+      "status": "completed",
+      "start_time": "2026-06-28T18:31:24.909998+00:00",
+      "end_time": "2026-06-28T18:44:09.024039+00:00",
+      "results_path": "results/experiment4.json",
+      "metadata_path": "results/experiment4_metadata.json"
+    },
+    {
+      "experiment": 5,
+      "status": "completed",
+      "start_time": "2026-06-28T19:48:57.688123+00:00",
+      "end_time": "2026-06-28T20:06:37.404145+00:00",
+      "results_path": "results/experiment5.json",
+      "metadata_path": "results/experiment5_metadata.json"
+    }
+  ]
+}
