@@ -37,8 +37,12 @@ def headline_cases(draw):
     k = draw(st.integers(min_value=1, max_value=8))
     rank = draw(st.integers(min_value=1, max_value=min(d, k)))
     alpha = draw(
-        st.floats(min_value=1.0, max_value=HEADLINE_ALPHA_MAX,
-                  allow_nan=False, allow_infinity=False)
+        st.floats(
+            min_value=1.0,
+            max_value=HEADLINE_ALPHA_MAX,
+            allow_nan=False,
+            allow_infinity=False,
+        )
     )
     kind = draw(base_kinds())
     seed = draw(st.integers(min_value=0, max_value=2**31 - 1))
@@ -88,15 +92,17 @@ def test_merged_unmerged_equivalence_deterministic(kind):
 
     # Headline check: the merged weight reproduces the unmerged forward.
     max_diff = torch.max(torch.abs(out_unmerged - out_merged)).item()
-    assert max_diff <= TOLERANCE, f"merged/unmerged max diff {max_diff} exceeds {TOLERANCE}"
+    assert (
+        max_diff <= TOLERANCE
+    ), f"merged/unmerged max diff {max_diff} exceeds {TOLERANCE}"
 
     module.unmerge_adapter()
 
     # Unmerging must restore the original base weight elementwise.
     restore_diff = torch.max(torch.abs(module.base.weight - original_weight)).item()
-    assert restore_diff <= TOLERANCE, (
-        f"unmerge restoration max diff {restore_diff} exceeds {TOLERANCE}"
-    )
+    assert (
+        restore_diff <= TOLERANCE
+    ), f"unmerge restoration max diff {restore_diff} exceeds {TOLERANCE}"
 
 
 # Feature: catalyst-lora, Property 1
@@ -126,4 +132,6 @@ def test_merged_unmerged_equivalence_random(case):
     assert torch.allclose(out_unmerged, out_merged, atol=TOLERANCE, rtol=1e-4)
 
     module.unmerge_adapter()
-    assert torch.allclose(module.base.weight, original_weight, atol=TOLERANCE, rtol=1e-4)
+    assert torch.allclose(
+        module.base.weight, original_weight, atol=TOLERANCE, rtol=1e-4
+    )

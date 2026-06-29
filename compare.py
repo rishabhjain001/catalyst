@@ -174,8 +174,13 @@ def _apply_blend(manager: AdapterManager, effective: dict):
     return restore
 
 
-def run_variants(prompt: str, max_tokens: int, gemini: bool, config: dict = None,
-                 results_dir: str = None) -> dict:
+def run_variants(
+    prompt: str,
+    max_tokens: int,
+    gemini: bool,
+    config: dict = None,
+    results_dir: str = None,
+) -> dict:
     """Run ``prompt`` through every variant and return their outputs.
 
     The result maps each variant name to ``{"text": str, "gemini": dict | None}``.
@@ -286,8 +291,7 @@ def _print_side_by_side(outputs: dict, width: int = 32) -> None:
 
     labels = [name for name, _ in variants]
     columns = [
-        textwrap.wrap(value["text"] or "", width=width) or [""]
-        for _, value in variants
+        textwrap.wrap(value["text"] or "", width=width) or [""] for _, value in variants
     ]
 
     header = " | ".join(label[:width].ljust(width) for label in labels)

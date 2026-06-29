@@ -143,9 +143,7 @@ def _measure_swap(model, config: dict):
 def _metadata(config: dict, tokenizer, warmup: int, timed: int) -> dict:
     """Small provenance stub recorded alongside the measurements."""
     decoding = config.get("decoding") or {}
-    model_name = getattr(tokenizer, "name_or_path", None) or config.get(
-        "model_name"
-    )
+    model_name = getattr(tokenizer, "name_or_path", None) or config.get("model_name")
     return {
         "model_name": model_name,
         "timestamp": datetime.now(timezone.utc).isoformat(),
@@ -192,9 +190,7 @@ def run_benchmark(config: dict = None) -> dict:
     # Warm start reuses the evaluator's warm-up-then-timed methodology and its
     # statistics, so the discard and the stats are computed in exactly one place.
     stats = measure_latency(model, prompts, warmup, timed, eval_config)
-    warm_start = {
-        key: stats[key] for key in ("mean", "median", "p95", "stddev")
-    }
+    warm_start = {key: stats[key] for key in ("mean", "median", "p95", "stddev")}
     tokens_per_second = stats["tokens_per_second"]
 
     # Swap timing mutates the model in place (injection then merges), so it runs

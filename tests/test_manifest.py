@@ -10,7 +10,6 @@ record lists to confirm every entry is complete and faithful to its input.
 """
 
 import json
-import os
 import tempfile
 from datetime import datetime, timedelta
 

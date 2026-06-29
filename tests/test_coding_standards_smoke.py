@@ -151,7 +151,9 @@ def test_no_todo_or_fixme_markers():
     marker = re.compile(r"TODO|FIXME", re.IGNORECASE)
     offenders = []
     for source in _source_files():
-        for number, line in enumerate(source.read_text(encoding="utf-8").splitlines(), 1):
+        for number, line in enumerate(
+            source.read_text(encoding="utf-8").splitlines(), 1
+        ):
             if marker.search(line):
                 offenders.append(f"{source.name}:{number}: {line.strip()}")
     assert not offenders, "TODO/FIXME markers found:\n" + "\n".join(offenders)
@@ -229,7 +231,11 @@ def _is_docstring(statement):
 
 def _has_abstract_decorator(node):
     for decorator in node.decorator_list:
-        name = decorator.attr if isinstance(decorator, ast.Attribute) else getattr(decorator, "id", "")
+        name = (
+            decorator.attr
+            if isinstance(decorator, ast.Attribute)
+            else getattr(decorator, "id", "")
+        )
         if "abstract" in str(name).lower():
             return True
     return False

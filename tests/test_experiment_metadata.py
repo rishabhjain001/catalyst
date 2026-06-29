@@ -83,11 +83,15 @@ def configs(draw):
 
     # A handful of extra JSON-serializable fields to vary the snapshot.
     if draw(st.booleans()):
-        config["alpha"] = draw(st.floats(min_value=0.1, max_value=64.0,
-                                          allow_nan=False, allow_infinity=False))
+        config["alpha"] = draw(
+            st.floats(
+                min_value=0.1, max_value=64.0, allow_nan=False, allow_infinity=False
+            )
+        )
     if draw(st.booleans()):
-        config["targets"] = draw(st.lists(st.sampled_from(["q", "v", "k", "o"]),
-                                           max_size=4, unique=True))
+        config["targets"] = draw(
+            st.lists(st.sampled_from(["q", "v", "k", "o"]), max_size=4, unique=True)
+        )
 
     return config
 
@@ -185,8 +189,9 @@ def test_config_sha256_matches_an_arbitrary_passed_config_file(tmp_path):
     custom.write_bytes(b"model_name: gpt2\nseed: 123\n")
     expected = hashlib.sha256(custom.read_bytes()).hexdigest()
 
-    metadata = capture_metadata({"model_name": "gpt2", "seed": 123}, 1,
-                                config_path=str(custom))
+    metadata = capture_metadata(
+        {"model_name": "gpt2", "seed": 123}, 1, config_path=str(custom)
+    )
 
     assert metadata["config_sha256"] == expected
     assert metadata["config_sha256"] != _REFERENCE_CONFIG_SHA256

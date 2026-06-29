@@ -50,7 +50,9 @@ def _install_bodies(monkeypatch, bodies):
 
 # Feature: catalyst-lora, Task 9.14
 # Validates: Requirements 19.1
-def test_runs_experiments_in_strict_1_to_5_order(tmp_path, monkeypatch, isolate_startup):
+def test_runs_experiments_in_strict_1_to_5_order(
+    tmp_path, monkeypatch, isolate_startup
+):
     """The runner calls the five bodies in exactly the order 1, 2, 3, 4, 5."""
     call_order = []
 

@@ -34,8 +34,14 @@ from hypothesis import given, settings
 from hypothesis import strategies as st
 
 from catalyst.lora import LoRA_Module
-from tests.strategies import base_kinds, dims, make_base, \
-    out_of_range_mixing_factors, tensors, valid_ranks
+from tests.strategies import (
+    base_kinds,
+    dims,
+    make_base,
+    out_of_range_mixing_factors,
+    tensors,
+    valid_ranks,
+)
 
 TOLERANCE = 1e-5
 
@@ -90,16 +96,27 @@ def interp_cases(draw):
     b_a = draw(tensors((d, rank), scale_min=0.1, scale_max=1.0))
     a_b = draw(tensors((rank, k), scale_min=0.1, scale_max=1.0))
     b_b = draw(tensors((d, rank), scale_min=0.1, scale_max=1.0))
-    alpha_a = draw(st.floats(min_value=1.0, max_value=16.0,
-                             allow_nan=False, allow_infinity=False))
-    alpha_b = draw(st.floats(min_value=1.0, max_value=16.0,
-                             allow_nan=False, allow_infinity=False))
-    factor = draw(st.floats(min_value=0.0, max_value=1.0,
-                            allow_nan=False, allow_infinity=False))
+    alpha_a = draw(
+        st.floats(min_value=1.0, max_value=16.0, allow_nan=False, allow_infinity=False)
+    )
+    alpha_b = draw(
+        st.floats(min_value=1.0, max_value=16.0, allow_nan=False, allow_infinity=False)
+    )
+    factor = draw(
+        st.floats(min_value=0.0, max_value=1.0, allow_nan=False, allow_infinity=False)
+    )
     return {
-        "d": d, "k": k, "rank": rank, "kind": kind,
-        "a_a": a_a, "b_a": b_a, "a_b": a_b, "b_b": b_b,
-        "alpha_a": alpha_a, "alpha_b": alpha_b, "factor": factor,
+        "d": d,
+        "k": k,
+        "rank": rank,
+        "kind": kind,
+        "a_a": a_a,
+        "b_a": b_a,
+        "a_b": a_b,
+        "b_b": b_b,
+        "alpha_a": alpha_a,
+        "alpha_b": alpha_b,
+        "factor": factor,
     }
 
 
@@ -122,14 +139,22 @@ def test_interpolation_formula(case):
 
     with tempfile.TemporaryDirectory() as directory:
         path_a, delta_a = _save_adapter(
-            directory, "adapter_a",
+            directory,
+            "adapter_a",
             make_base(case["d"], case["k"], case["kind"]),
-            case["rank"], case["alpha_a"], case["a_a"], case["b_a"],
+            case["rank"],
+            case["alpha_a"],
+            case["a_a"],
+            case["b_a"],
         )
         path_b, delta_b = _save_adapter(
-            directory, "adapter_b",
+            directory,
+            "adapter_b",
             make_base(case["d"], case["k"], case["kind"]),
-            case["rank"], case["alpha_b"], case["a_b"], case["b_b"],
+            case["rank"],
+            case["alpha_b"],
+            case["a_b"],
+            case["b_b"],
         )
 
         alpha = case["factor"]
@@ -158,14 +183,22 @@ def test_interpolation_endpoints(case):
 
     with tempfile.TemporaryDirectory() as directory:
         path_a, delta_a = _save_adapter(
-            directory, "adapter_a",
+            directory,
+            "adapter_a",
             make_base(case["d"], case["k"], case["kind"]),
-            case["rank"], case["alpha_a"], case["a_a"], case["b_a"],
+            case["rank"],
+            case["alpha_a"],
+            case["a_a"],
+            case["b_a"],
         )
         path_b, delta_b = _save_adapter(
-            directory, "adapter_b",
+            directory,
+            "adapter_b",
             make_base(case["d"], case["k"], case["kind"]),
-            case["rank"], case["alpha_b"], case["a_b"], case["b_b"],
+            case["rank"],
+            case["alpha_b"],
+            case["a_b"],
+            case["b_b"],
         )
 
         # alpha 0.0 collapses to the pure adapter_a effective weight.
@@ -200,14 +233,20 @@ def test_interpolation_out_of_range_raises(data):
 
     with tempfile.TemporaryDirectory() as directory:
         path_a, _ = _save_adapter(
-            directory, "adapter_a", make_base(d, k, kind),
-            rank, 1.0,
+            directory,
+            "adapter_a",
+            make_base(d, k, kind),
+            rank,
+            1.0,
             data.draw(tensors((rank, k), scale_min=0.1, scale_max=1.0)),
             data.draw(tensors((d, rank), scale_min=0.1, scale_max=1.0)),
         )
         path_b, _ = _save_adapter(
-            directory, "adapter_b", make_base(d, k, kind),
-            rank, 1.0,
+            directory,
+            "adapter_b",
+            make_base(d, k, kind),
+            rank,
+            1.0,
             data.draw(tensors((rank, k), scale_min=0.1, scale_max=1.0)),
             data.draw(tensors((d, rank), scale_min=0.1, scale_max=1.0)),
         )

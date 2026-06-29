@@ -47,7 +47,13 @@ from .model import (
     load_model,
     resolve_targets,
 )
-from .train import train, trainable_percent
+from .train import (
+    report_runtime,
+    timed_step,
+    total_experiment_steps,
+    train,
+    trainable_percent,
+)
 
 # Where the runner writes every experiment artifact (Req 19.2, 19.4). Matches
 # train.RESULTS_DIR so adapter artifacts and result JSONs share one directory;
@@ -527,9 +533,7 @@ def experiment1(config: dict) -> dict:
             model = _build_model(config)
             # Uniform rank across every layer that exposes the requested
             # targets; the resolver's layer indices are the layers to adapt.
-            rank_by_layer = {
-                index: rank for index in resolve_targets(model, targets)
-            }
+            rank_by_layer = {index: rank for index in resolve_targets(model, targets)}
             inject_lora(model, rank_by_layer, targets, alpha)
             total, trainable = _count_parameters(model)
             by_rank[key] = {
@@ -540,9 +544,7 @@ def experiment1(config: dict) -> dict:
             measured_any = True
         except Exception as error:
             by_rank[key] = None
-            failures.append(
-                {"metric": f"by_rank.{key}", "reason": str(error)}
-            )
+            failures.append({"metric": f"by_rank.{key}", "reason": str(error)})
 
     metrics = {"by_rank": by_rank}
 
@@ -550,9 +552,7 @@ def experiment1(config: dict) -> dict:
         # No rank could be measured: surface a runtime failure so the wrapper
         # records the experiment as failed without any fabricated numbers.
         reasons = "; ".join(entry["reason"] for entry in failures)
-        raise RuntimeError(
-            f"Experiment 1 could not measure any rank: {reasons}"
-        )
+        raise RuntimeError(f"Experiment 1 could not measure any rank: {reasons}")
 
     if failures:
         # Some ranks measured, others did not: keep the real numbers and mark
@@ -608,9 +608,7 @@ def _sentence(example: dict) -> str:
     for key in _TEXT_KEYS:
         if key in example:
             return example[key]
-    raise KeyError(
-        f"Dataset example has no text field; expected one of {_TEXT_KEYS}."
-    )
+    raise KeyError(f"Dataset example has no text field; expected one of {_TEXT_KEYS}.")
 
 
 def _prompt_prefix(sentence: str, words: int = 4) -> str:
@@ -820,16 +818,12 @@ def _run_condition(
 
     result = evaluate(model, eval_data, eval_config)
     condition_metrics = dict(result["metrics"])
-    condition_metrics["throughput"] = summary.get(
-        "avg_throughput_samples_per_sec"
-    )
+    condition_metrics["throughput"] = summary.get("avg_throughput_samples_per_sec")
     condition_metrics["failures"] = result["failures"]
     return condition_metrics
 
 
-def _run_rank(
-    config: dict, rank: int, targets, alpha: float, train_dataset
-) -> dict:
+def _run_rank(config: dict, rank: int, targets, alpha: float, train_dataset) -> dict:
     """Train and evaluate one Experiment 2 adapter at ``rank`` (Req 15).
 
     Thin wrapper over ``_run_condition`` that names the saved adapter per rank
@@ -897,9 +891,7 @@ def experiment2(config: dict) -> dict:
     for rank in ranks:
         key = str(rank)
         try:
-            by_rank[key] = _run_rank(
-                config, rank, targets, alpha, train_dataset
-            )
+            by_rank[key] = _run_rank(config, rank, targets, alpha, train_dataset)
             measured_any = True
         except Exception as error:
             by_rank[key] = None
@@ -909,9 +901,7 @@ def experiment2(config: dict) -> dict:
 
     if not measured_any:
         reasons = "; ".join(entry["reason"] for entry in failures)
-        raise RuntimeError(
-            f"Experiment 2 could not train any rank: {reasons}"
-        )
+        raise RuntimeError(f"Experiment 2 could not train any rank: {reasons}")
 
     if failures:
         raise PartialExperiment(
@@ -1007,9 +997,7 @@ def experiment3(config: dict) -> dict:
     config = config or {}
     target_sets = [
         list(targets)
-        for targets in config.get(
-            "experiment3_target_sets", EXPERIMENT3_TARGET_SETS
-        )
+        for targets in config.get("experiment3_target_sets", EXPERIMENT3_TARGET_SETS)
     ]
     rank = int(config.get("experiment3_rank", EXPERIMENT3_RANK))
     alpha = float(config.get("alpha", 16.0))
@@ -1034,17 +1022,13 @@ def experiment3(config: dict) -> dict:
             measured_any = True
         except Exception as error:
             by_targets[key] = None
-            failures.append(
-                {"metric": f"by_targets.{key}", "reason": str(error)}
-            )
+            failures.append({"metric": f"by_targets.{key}", "reason": str(error)})
 
     metrics = {"by_targets": by_targets}
 
     if not measured_any:
         reasons = "; ".join(entry["reason"] for entry in failures)
-        raise RuntimeError(
-            f"Experiment 3 could not train any target set: {reasons}"
-        )
+        raise RuntimeError(f"Experiment 3 could not train any target set: {reasons}")
 
     if failures:
         raise PartialExperiment(
@@ -1143,7 +1127,9 @@ def _max_abs_diff(model, batch) -> float:
     return float((before - after).abs().max().item())
 
 
-def _swap_demonstration(trained_model, positive_dir: str, negative_dir: str, batch) -> dict:
+def _swap_demonstration(
+    trained_model, positive_dir: str, negative_dir: str, batch
+) -> dict:
     """Switch between named adapters via ``swap_adapter`` and report the change.
 
     Builds an ``AdapterManager`` over a copy of a trained model, registers the
@@ -1179,9 +1165,7 @@ def _swap_demonstration(trained_model, positive_dir: str, negative_dir: str, bat
     }
 
 
-def _persistence_round_trip(
-    positive_model, negative_model, directory: str
-) -> dict:
+def _persistence_round_trip(positive_model, negative_model, directory: str) -> dict:
     """Save, load, and list named adapters and report the round trip (Req 17.4).
 
     Writes the positive and negative adapters as single-file artifacts into one
@@ -1242,7 +1226,13 @@ def _sentiment_score(text: str) -> float:
 
 
 def _generate_blended(
-    blend_model, manager, name_a: str, name_b: str, alpha: float, prompt: str, eval_config: dict
+    blend_model,
+    manager,
+    name_a: str,
+    name_b: str,
+    alpha: float,
+    prompt: str,
+    eval_config: dict,
 ) -> str:
     """Generate text with two named adapters blended at ``alpha``.
 
@@ -1277,7 +1267,15 @@ def _generate_blended(
 
 
 def _interpolation_curve(
-    config: dict, targets, alpha: float, rank: int, positive_dir: str, negative_dir: str, prompt: str, eval_config: dict, alphas
+    config: dict,
+    targets,
+    alpha: float,
+    rank: int,
+    positive_dir: str,
+    negative_dir: str,
+    prompt: str,
+    eval_config: dict,
+    alphas,
 ) -> list:
     """Sweep the named blend across ``alphas`` and score each generation.
 
@@ -1299,7 +1297,13 @@ def _interpolation_curve(
     curve = []
     for value in alphas:
         text = _generate_blended(
-            blend_model, manager, "positive", "negative", float(value), prompt, eval_config
+            blend_model,
+            manager,
+            "positive",
+            "negative",
+            float(value),
+            prompt,
+            eval_config,
         )
         curve.append(
             {
@@ -1441,8 +1445,15 @@ def experiment4(config: dict) -> dict:
     # Sentiment interpolation curve across alpha 0.0..1.0 (Req 17.5).
     try:
         metrics["sentiment_by_alpha"] = _interpolation_curve(
-            config, targets, alpha, rank, positive_dir, negative_dir,
-            prompts[0], eval_config, alphas,
+            config,
+            targets,
+            alpha,
+            rank,
+            positive_dir,
+            negative_dir,
+            prompts[0],
+            eval_config,
+            alphas,
         )
     except Exception as error:
         null_metric(metrics, failures, "sentiment_by_alpha", str(error))
@@ -1522,9 +1533,7 @@ def rank_schedules(layer_indices, config: dict = None) -> dict:
     proportionally smaller ranks.
     """
     config = config or {}
-    uniform_rank = int(
-        config.get("experiment5_uniform_rank", EXPERIMENT5_UNIFORM_RANK)
-    )
+    uniform_rank = int(config.get("experiment5_uniform_rank", EXPERIMENT5_UNIFORM_RANK))
     progressive_ranks = tuple(
         config.get("experiment5_progressive_ranks", EXPERIMENT5_PROGRESSIVE_RANKS)
     )
@@ -1694,16 +1703,13 @@ def experiment5(config: dict) -> dict:
                 str(index): rank for index, rank in rank_by_layer.items()
             }
             block["per_layer_param_counts"] = {
-                str(index): count
-                for index, count in per_layer_counts[name].items()
+                str(index): count for index, count in per_layer_counts[name].items()
             }
             by_schedule[name] = block
             measured_any = True
         except Exception as error:
             by_schedule[name] = None
-            failures.append(
-                {"metric": f"by_schedule.{name}", "reason": str(error)}
-            )
+            failures.append({"metric": f"by_schedule.{name}", "reason": str(error)})
 
     metrics = {
         "by_schedule": by_schedule,
@@ -1714,9 +1720,7 @@ def experiment5(config: dict) -> dict:
 
     if not measured_any:
         reasons = "; ".join(entry["reason"] for entry in failures)
-        raise RuntimeError(
-            f"Experiment 5 could not train any schedule: {reasons}"
-        )
+        raise RuntimeError(f"Experiment 5 could not train any schedule: {reasons}")
 
     if failures:
         raise PartialExperiment(

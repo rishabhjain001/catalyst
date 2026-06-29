@@ -105,9 +105,7 @@ def _read(path):
 
 
 def test_experiment4_records_all_demonstrations(tmp_path, monkeypatch):
-    monkeypatch.setattr(
-        train_module, "CHECKPOINT_DIR", str(tmp_path / "checkpoints")
-    )
+    monkeypatch.setattr(train_module, "CHECKPOINT_DIR", str(tmp_path / "checkpoints"))
 
     record = run_experiment(4, _config(tmp_path))
 
@@ -136,9 +134,7 @@ def test_experiment4_records_all_demonstrations(tmp_path, monkeypatch):
 
 
 def test_experiment4_latency_and_memory_cover_four_conditions(tmp_path, monkeypatch):
-    monkeypatch.setattr(
-        train_module, "CHECKPOINT_DIR", str(tmp_path / "checkpoints")
-    )
+    monkeypatch.setattr(train_module, "CHECKPOINT_DIR", str(tmp_path / "checkpoints"))
 
     record = run_experiment(4, _config(tmp_path))
 
@@ -156,9 +152,7 @@ def test_experiment4_latency_and_memory_cover_four_conditions(tmp_path, monkeypa
 
 
 def test_experiment4_persists_results_json(tmp_path, monkeypatch):
-    monkeypatch.setattr(
-        train_module, "CHECKPOINT_DIR", str(tmp_path / "checkpoints")
-    )
+    monkeypatch.setattr(train_module, "CHECKPOINT_DIR", str(tmp_path / "checkpoints"))
 
     run_experiment(4, _config(tmp_path))
 

@@ -8,7 +8,6 @@ stays clean.
 """
 
 import json
-import os
 from datetime import datetime
 
 import pytest
@@ -150,7 +149,9 @@ def test_write_manifest_has_version_one_and_one_entry_per_record(tmp_path):
     config = _config(tmp_path)
     records = [
         run_experiment(1, config, body=lambda c: {"metrics": {"a": 1}}),
-        run_experiment(2, config, body=lambda c: (_ for _ in ()).throw(RuntimeError("x"))),
+        run_experiment(
+            2, config, body=lambda c: (_ for _ in ()).throw(RuntimeError("x"))
+        ),
     ]
 
     path = write_manifest(records, config)

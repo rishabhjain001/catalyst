@@ -8,7 +8,6 @@ non-adapter files that happen to share the directory.
 import tempfile
 from pathlib import Path
 
-import torch
 from hypothesis import given, settings
 from hypothesis import strategies as st
 from torch import nn

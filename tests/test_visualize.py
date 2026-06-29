@@ -68,7 +68,9 @@ def _completed_record(n, metrics):
 
 
 def _experiment1_metrics():
-    return {"by_rank": {"4": {"trainable_percent": 0.5}, "8": {"trainable_percent": 0.9}}}
+    return {
+        "by_rank": {"4": {"trainable_percent": 0.5}, "8": {"trainable_percent": 0.9}}
+    }
 
 
 def _experiment2_metrics():

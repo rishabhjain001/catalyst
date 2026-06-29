@@ -31,4 +31,4 @@ def test_conditioning_tags_and_preserves_text(text, label):
 
     # The original text is preserved exactly after the tag and single space.
     assert result == f"{expected_tag} {text}"
-    assert result[len(expected_tag) + 1:] == text
+    assert result[len(expected_tag) + 1 :] == text

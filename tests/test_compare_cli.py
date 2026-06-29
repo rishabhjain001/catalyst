@@ -106,7 +106,10 @@ def test_run_variants_no_adapters_runs_base_unmerged_merged(tmp_path):
     results_dir.mkdir()
 
     outputs = run_variants(
-        prompt="the", max_tokens=3, gemini=False, config=config,
+        prompt="the",
+        max_tokens=3,
+        gemini=False,
+        config=config,
         results_dir=str(results_dir),
     )
 
@@ -131,7 +134,10 @@ def test_run_variants_two_adapters_covers_adapters_and_blends(tmp_path):
     _save_named_adapter(base, config, "negative", results_dir / "negative")
 
     outputs = run_variants(
-        prompt="the", max_tokens=3, gemini=False, config=config,
+        prompt="the",
+        max_tokens=3,
+        gemini=False,
+        config=config,
         results_dir=str(results_dir),
     )
 
@@ -208,9 +214,9 @@ def test_compare_import_starts_no_server():
     # Importing compare must not pull in any web/dashboard server (Req 20.6).
     assert compare  # already imported at module top
     for module_name in SERVER_MODULES:
-        assert module_name not in sys.modules, (
-            f"compare import unexpectedly loaded server module {module_name!r}"
-        )
+        assert (
+            module_name not in sys.modules
+        ), f"compare import unexpectedly loaded server module {module_name!r}"
 
 
 def test_compare_source_imports_no_server():
@@ -218,6 +224,6 @@ def test_compare_source_imports_no_server():
     source = (compare.PROJECT_ROOT / "compare.py").read_text(encoding="utf-8")
     for module_name in SERVER_MODULES:
         root = module_name.split(".", 1)[0]
-        assert f"import {root}" not in source, (
-            f"compare.py unexpectedly imports {root!r}"
-        )
+        assert (
+            f"import {root}" not in source
+        ), f"compare.py unexpectedly imports {root!r}"

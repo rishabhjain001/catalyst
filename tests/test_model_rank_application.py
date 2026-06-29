@@ -13,7 +13,6 @@ of the injector.
 
 import copy
 
-import torch
 from hypothesis import given, settings
 from hypothesis import strategies as st
 from transformers import GPT2Config, GPT2LMHeadModel
@@ -56,8 +55,9 @@ def _block_adapters(block) -> list:
 @given(
     rank_by_layer=rank_by_layer_dicts(),
     targets=st.sampled_from(TARGET_SETS),
-    alpha=st.floats(min_value=0.5, max_value=32.0, allow_nan=False,
-                    allow_infinity=False),
+    alpha=st.floats(
+        min_value=0.5, max_value=32.0, allow_nan=False, allow_infinity=False
+    ),
 )
 def test_each_injected_module_carries_layer_rank(rank_by_layer, targets, alpha):
     """Validates: Requirements 6.1"""
@@ -73,9 +73,7 @@ def test_each_injected_module_carries_layer_rank(rank_by_layer, targets, alpha):
     total_checked = 0
     for index, expected_rank in rank_by_layer.items():
         adapters = _block_adapters(blocks[index])
-        assert adapters, (
-            f"Layer {index} was in rank_by_layer but received no adapters."
-        )
+        assert adapters, f"Layer {index} was in rank_by_layer but received no adapters."
         for adapter in adapters:
             assert adapter.rank == expected_rank, (
                 f"Layer {index} adapter has rank {adapter.rank}, "
@@ -89,9 +87,9 @@ def test_each_injected_module_carries_layer_rank(rank_by_layer, targets, alpha):
     # the rank map alone drives which layers carry adapters.
     for index, block in blocks.items():
         if index not in rank_by_layer:
-            assert not _block_adapters(block), (
-                f"Layer {index} was not in rank_by_layer but received adapters."
-            )
+            assert not _block_adapters(
+                block
+            ), f"Layer {index} was not in rank_by_layer but received adapters."
 
 
 # Feature: catalyst-lora, Property 9

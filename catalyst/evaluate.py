@@ -90,9 +90,7 @@ def generate_text(model, prompt: str, config: dict) -> str:
         torch.manual_seed(seed)
 
     with torch.no_grad():
-        output_ids = model.generate(
-            **inputs, pad_token_id=pad_token_id, **kwargs
-        )
+        output_ids = model.generate(**inputs, pad_token_id=pad_token_id, **kwargs)
 
     generated = output_ids[0, prompt_length:]
     return tokenizer.decode(generated, skip_special_tokens=True)
@@ -128,18 +126,14 @@ def _summarize_latency(latencies, warmup: int, token_counts) -> dict:
     timed_latencies = list(latencies)[warmup:]
     timed_tokens = list(token_counts)[warmup:]
     if not timed_latencies:
-        raise ValueError(
-            "no timed samples remain after discarding warm-up generations"
-        )
+        raise ValueError("no timed samples remain after discarding warm-up generations")
 
     stats = _latency_stats(timed_latencies)
     total_time = float(np.sum(timed_latencies))
     total_tokens = int(sum(timed_tokens))
     # tokens/sec is the aggregate generation throughput across the timed run,
     # which is steadier than averaging per-call ratios.
-    stats["tokens_per_second"] = (
-        total_tokens / total_time if total_time > 0 else 0.0
-    )
+    stats["tokens_per_second"] = total_tokens / total_time if total_time > 0 else 0.0
     return stats
 
 
@@ -554,8 +548,7 @@ def _aggregate_gemini(per_sample_scores) -> dict:
     means = {}
     for dimension in _GEMINI_DIMENSIONS:
         values = [
-            _clamp_score(score.get(dimension, 0.0))
-            for score in per_sample_scores
+            _clamp_score(score.get(dimension, 0.0)) for score in per_sample_scores
         ]
         means[dimension] = float(np.mean(values)) if values else 0.0
     return means
@@ -600,10 +593,7 @@ def _parse_gemini_response(text: str) -> dict:
     """
     match = re.search(r"\{.*\}", text, re.DOTALL)
     payload = json.loads(match.group(0)) if match else {}
-    return {
-        dimension: payload.get(dimension, 0.0)
-        for dimension in _GEMINI_DIMENSIONS
-    }
+    return {dimension: payload.get(dimension, 0.0) for dimension in _GEMINI_DIMENSIONS}
 
 
 def gemini_judge(samples, config: dict = None) -> dict:

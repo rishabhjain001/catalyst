@@ -59,9 +59,7 @@ def test_duration_equals_end_minus_start_and_timestamps_are_iso8601(
 
     # duration_seconds equals the recomputed difference of the parsed timestamps.
     expected = (end - start).total_seconds()
-    assert math.isclose(
-        record["duration_seconds"], expected, rel_tol=0.0, abs_tol=1e-6
-    )
+    assert math.isclose(record["duration_seconds"], expected, rel_tol=0.0, abs_tol=1e-6)
 
     # Time only moves forward, so the duration is never negative.
     assert record["duration_seconds"] >= 0.0

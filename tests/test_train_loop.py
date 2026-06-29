@@ -61,9 +61,7 @@ def test_train_loop_logs_metrics_and_saves_artifacts(tmp_path, monkeypatch):
 
     for entry in summary["step_logs"]:
         # Perplexity is exp(loss) and throughput/RAM are recorded positives.
-        assert math.isclose(
-            entry["perplexity"], math.exp(entry["loss"]), rel_tol=1e-6
-        )
+        assert math.isclose(entry["perplexity"], math.exp(entry["loss"]), rel_tol=1e-6)
         assert entry["throughput_samples_per_sec"] > 0.0
         assert entry["peak_ram_mb"] > 0.0
         assert entry["avg_ram_mb"] > 0.0

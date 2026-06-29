@@ -112,9 +112,7 @@ def _read(path):
 
 
 def test_experiment2_writes_by_rank_metrics(tmp_path, monkeypatch):
-    monkeypatch.setattr(
-        train_module, "CHECKPOINT_DIR", str(tmp_path / "checkpoints")
-    )
+    monkeypatch.setattr(train_module, "CHECKPOINT_DIR", str(tmp_path / "checkpoints"))
     config = _config(tmp_path)
 
     record = run_experiment(2, config)
@@ -140,9 +138,7 @@ def test_experiment2_writes_by_rank_metrics(tmp_path, monkeypatch):
             assert metric in block, (key, metric)
 
     # Higher rank trains strictly more parameters than lower rank.
-    assert (
-        by_rank["4"]["trainable_params"] > by_rank["2"]["trainable_params"]
-    )
+    assert by_rank["4"]["trainable_params"] > by_rank["2"]["trainable_params"]
 
     # The result JSON was persisted under the temp results dir (Req 15.3).
     written = _read(tmp_path / "experiment2.json")
@@ -152,9 +148,7 @@ def test_experiment2_writes_by_rank_metrics(tmp_path, monkeypatch):
 
 
 def test_experiment2_inference_latency_covers_four_conditions(tmp_path, monkeypatch):
-    monkeypatch.setattr(
-        train_module, "CHECKPOINT_DIR", str(tmp_path / "checkpoints")
-    )
+    monkeypatch.setattr(train_module, "CHECKPOINT_DIR", str(tmp_path / "checkpoints"))
 
     record = run_experiment(2, _config(tmp_path))
 
@@ -167,9 +161,7 @@ def test_experiment2_inference_latency_covers_four_conditions(tmp_path, monkeypa
 
 
 def test_experiment2_partial_when_one_rank_fails(tmp_path, monkeypatch):
-    monkeypatch.setattr(
-        train_module, "CHECKPOINT_DIR", str(tmp_path / "checkpoints")
-    )
+    monkeypatch.setattr(train_module, "CHECKPOINT_DIR", str(tmp_path / "checkpoints"))
     config = _config(tmp_path)
 
     calls = {"n": 0}

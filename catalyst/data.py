@@ -34,9 +34,7 @@ def load_sst2(split: str):
     try:
         return load_dataset("stanfordnlp/sst2", split=split)
     except Exception as error:
-        raise RuntimeError(
-            f"Failed to load SST-2 split {split!r}: {error}"
-        ) from error
+        raise RuntimeError(f"Failed to load SST-2 split {split!r}: {error}") from error
 
 
 def condition_text(text: str, label: int) -> str:
@@ -48,9 +46,7 @@ def _example_text(example: dict) -> str:
     for key in _TEXT_KEYS:
         if key in example:
             return example[key]
-    raise KeyError(
-        f"SST-2 example has no text field; expected one of {_TEXT_KEYS}."
-    )
+    raise KeyError(f"SST-2 example has no text field; expected one of {_TEXT_KEYS}.")
 
 
 def make_batches(dataset, tokenizer, batch_size: int) -> Iterator[dict]:

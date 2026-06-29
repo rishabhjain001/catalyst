@@ -37,15 +37,17 @@ def test_latency_stats_match_numpy(samples):
     stats = _latency_stats(samples)
     arr = np.asarray(samples, dtype=float)
 
-    assert math.isclose(stats["mean"], float(np.mean(arr)), rel_tol=1e-9,
-                        abs_tol=1e-12)
-    assert math.isclose(stats["median"], float(np.median(arr)), rel_tol=1e-9,
-                        abs_tol=1e-12)
-    assert math.isclose(stats["p95"], float(np.percentile(arr, 95)),
-                        rel_tol=1e-9, abs_tol=1e-12)
+    assert math.isclose(stats["mean"], float(np.mean(arr)), rel_tol=1e-9, abs_tol=1e-12)
+    assert math.isclose(
+        stats["median"], float(np.median(arr)), rel_tol=1e-9, abs_tol=1e-12
+    )
+    assert math.isclose(
+        stats["p95"], float(np.percentile(arr, 95)), rel_tol=1e-9, abs_tol=1e-12
+    )
     if arr.size > 1:
-        assert math.isclose(stats["stddev"], float(arr.std(ddof=1)),
-                            rel_tol=1e-9, abs_tol=1e-12)
+        assert math.isclose(
+            stats["stddev"], float(arr.std(ddof=1)), rel_tol=1e-9, abs_tol=1e-12
+        )
     else:
         # A single sample has no spread and reports 0.0 rather than NaN.
         assert stats["stddev"] == 0.0
@@ -62,17 +64,16 @@ def test_summarize_latency_excludes_warmup(data):
     n = len(latencies)
     warmup = data.draw(st.integers(min_value=0, max_value=n - 1))
     token_counts = data.draw(
-        st.lists(st.integers(min_value=1, max_value=10_000),
-                 min_size=n, max_size=n)
+        st.lists(st.integers(min_value=1, max_value=10_000), min_size=n, max_size=n)
     )
 
     summary = _summarize_latency(latencies, warmup, token_counts)
     expected = _latency_stats(latencies[warmup:])
 
     for key in ("mean", "median", "p95", "stddev"):
-        assert math.isclose(summary[key], expected[key], rel_tol=1e-9,
-                            abs_tol=1e-12)
+        assert math.isclose(summary[key], expected[key], rel_tol=1e-9, abs_tol=1e-12)
 
     expected_tps = sum(token_counts[warmup:]) / sum(latencies[warmup:])
-    assert math.isclose(summary["tokens_per_second"], expected_tps,
-                        rel_tol=1e-9, abs_tol=1e-12)
+    assert math.isclose(
+        summary["tokens_per_second"], expected_tps, rel_tol=1e-9, abs_tol=1e-12
+    )

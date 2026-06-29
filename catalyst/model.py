@@ -172,9 +172,7 @@ def _classify_block(block: nn.Module, hidden: int):
             # An expand/contract pair marks the MLP sublayer. The input
             # (expand) projection and the output (contract) projection are both
             # adapted under the logical ``mlp`` target.
-            expand = [
-                rel for rel, (o, i) in members if i == hidden and o > hidden
-            ]
+            expand = [rel for rel, (o, i) in members if i == hidden and o > hidden]
             for rel in expand:
                 roles["mlp"].append(rel)
             for rel in contract:

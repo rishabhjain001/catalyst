@@ -35,12 +35,8 @@ def test_environment_values_are_sensible(tmp_path):
     assert isinstance(snapshot["cpu_model"], str) and snapshot["cpu_model"]
     assert isinstance(snapshot["total_ram_bytes"], int)
     assert snapshot["total_ram_bytes"] > 0
-    assert isinstance(snapshot["python_version"], str) and snapshot[
-        "python_version"
-    ]
-    assert isinstance(snapshot["torch_version"], str) and snapshot[
-        "torch_version"
-    ]
+    assert isinstance(snapshot["python_version"], str) and snapshot["python_version"]
+    assert isinstance(snapshot["torch_version"], str) and snapshot["torch_version"]
     # Transformers is installed in this environment, so the version is a string;
     # the field is allowed to be null only when the library is absent.
     assert snapshot["transformers_version"] is None or isinstance(

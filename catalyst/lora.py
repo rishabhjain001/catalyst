@@ -138,9 +138,7 @@ class LoRA_Module(nn.Module):
 
     def unmerge_adapter(self) -> None:
         if not self.merged:
-            raise RuntimeError(
-                "Adapter is not merged; nothing to unmerge."
-            )
+            raise RuntimeError("Adapter is not merged; nothing to unmerge.")
         delta = self._delta_weight()
         if self.layer_kind == "conv1d":
             delta = delta.t()
@@ -266,8 +264,7 @@ class LoRA_Module(nn.Module):
     ) -> torch.Tensor:
         if not 0.0 <= alpha <= 1.0:
             raise ValueError(
-                f"interpolate_adapters requires alpha in [0.0, 1.0], "
-                f"got {alpha}."
+                f"interpolate_adapters requires alpha in [0.0, 1.0], " f"got {alpha}."
             )
 
         delta_a = self._load_delta(adapter_a)
@@ -294,15 +291,17 @@ class LoRA_Module(nn.Module):
             if not entry.is_file():
                 continue
             try:
-                artifact = torch.load(
-                    entry, map_location="cpu", weights_only=True
-                )
+                artifact = torch.load(entry, map_location="cpu", weights_only=True)
             except Exception:
                 continue
-            if isinstance(artifact, dict) and {
-                "format_version",
-                "A",
-                "B",
-            } <= artifact.keys():
+            if (
+                isinstance(artifact, dict)
+                and {
+                    "format_version",
+                    "A",
+                    "B",
+                }
+                <= artifact.keys()
+            ):
                 found.append(entry.stem)
         return found

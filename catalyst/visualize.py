@@ -276,9 +276,7 @@ def _memory_conditions(results: dict) -> dict:
 
     by_rank = _metrics(results, 2).get("by_rank") or {}
     for block in by_rank.values():
-        if isinstance(block, dict) and isinstance(
-            block.get("inference_memory"), dict
-        ):
+        if isinstance(block, dict) and isinstance(block.get("inference_memory"), dict):
             return block["inference_memory"]
     return {}
 
@@ -301,7 +299,9 @@ def plot_memory_comparison(results: dict, plots_dir: str) -> str:
     if present:
         positions = np.arange(len(present))
         width = 0.4
-        ax.bar(positions - width / 2, peak, width, label="peak RAM (MB)", color="#8e44ad")
+        ax.bar(
+            positions - width / 2, peak, width, label="peak RAM (MB)", color="#8e44ad"
+        )
         ax.bar(positions + width / 2, avg, width, label="avg RAM (MB)", color="#16a085")
         ax.set_xticks(positions)
         ax.set_xticklabels(present)
@@ -334,7 +334,9 @@ def plot_loss_curves(results: dict, plots_dir: str) -> str:
     labels = []
     losses = []
     missing = []
-    for key in sorted(by_rank, key=lambda value: int(value) if value.isdigit() else value):
+    for key in sorted(
+        by_rank, key=lambda value: int(value) if value.isdigit() else value
+    ):
         block = by_rank[key]
         if isinstance(block, dict) and block.get("validation_loss") is not None:
             labels.append(key)
@@ -375,9 +377,7 @@ def _latency_conditions(results: dict) -> dict:
 
     by_rank = _metrics(results, 2).get("by_rank") or {}
     for block in by_rank.values():
-        if isinstance(block, dict) and isinstance(
-            block.get("inference_latency"), dict
-        ):
+        if isinstance(block, dict) and isinstance(block.get("inference_latency"), dict):
             return block["inference_latency"]
     return {}
 

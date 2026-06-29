@@ -52,9 +52,7 @@ def swap_cases(draw):
     rank = draw(st.integers(min_value=1, max_value=min(d, k)))
     kind = draw(base_kinds())
     alpha = draw(
-        st.floats(
-            min_value=1.0, max_value=16.0, allow_nan=False, allow_infinity=False
-        )
+        st.floats(min_value=1.0, max_value=16.0, allow_nan=False, allow_infinity=False)
     )
     a_old = draw(tensors((rank, k), scale_min=0.1, scale_max=1.0))
     b_old = draw(tensors((d, rank), scale_min=0.1, scale_max=1.0))
@@ -115,7 +113,11 @@ def _save_adapter(d, k, rank, alpha, kind, a, b, path):
 def test_swap_consistency(case):
     """Validates: Requirements 4.1, 4.2, 17.3"""
     d, k, rank, alpha, kind = (
-        case["d"], case["k"], case["rank"], case["alpha"], case["kind"]
+        case["d"],
+        case["k"],
+        case["rank"],
+        case["alpha"],
+        case["kind"],
     )
     x = case["x"]
 
@@ -129,9 +131,7 @@ def test_swap_consistency(case):
 
     with tempfile.TemporaryDirectory() as directory:
         path_new = os.path.join(directory, "adapter_new.pt")
-        _save_adapter(
-            d, k, rank, alpha, kind, case["a_new"], case["b_new"], path_new
-        )
+        _save_adapter(d, k, rank, alpha, kind, case["a_new"], case["b_new"], path_new)
 
         module.swap_adapter(path_new)
         swapped_out = module.forward(x)
@@ -159,7 +159,11 @@ def test_swap_consistency(case):
 def test_swap_failure_restoration(case):
     """Validates: Requirements 4.3, 17.3"""
     d, k, rank, alpha, kind = (
-        case["d"], case["k"], case["rank"], case["alpha"], case["kind"]
+        case["d"],
+        case["k"],
+        case["rank"],
+        case["alpha"],
+        case["kind"],
     )
     x = case["x"]
 

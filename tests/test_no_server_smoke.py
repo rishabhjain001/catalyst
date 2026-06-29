@@ -82,9 +82,7 @@ def _patch_loaders(monkeypatch):
     monkeypatch.setattr(
         transformers.AutoModelForCausalLM, "from_pretrained", fake_model
     )
-    monkeypatch.setattr(
-        transformers.AutoTokenizer, "from_pretrained", fake_tokenizer
-    )
+    monkeypatch.setattr(transformers.AutoTokenizer, "from_pretrained", fake_tokenizer)
     return recorded
 
 
@@ -148,8 +146,7 @@ def test_model_identifier_source_is_only_config(monkeypatch):
     # reassignment to a different model).
     assert '(config or {}).get("model_name", "gpt2")' in body
     assignments = [
-        line for line in body.splitlines()
-        if line.strip().startswith("model_name =")
+        line for line in body.splitlines() if line.strip().startswith("model_name =")
     ]
     assert len(assignments) == 1, (
         f"load_model reassigns model_name {len(assignments)} times; the "
@@ -172,12 +169,12 @@ def test_sources_import_no_web_or_dashboard_framework():
     for label, source in _python_sources():
         for module_name in SERVER_MODULES:
             root = module_name.split(".", 1)[0]
-            assert f"import {root}" not in source, (
-                f"{label} unexpectedly imports web/dashboard module {root!r}"
-            )
-            assert f"from {root}" not in source, (
-                f"{label} unexpectedly imports from web/dashboard module {root!r}"
-            )
+            assert (
+                f"import {root}" not in source
+            ), f"{label} unexpectedly imports web/dashboard module {root!r}"
+            assert (
+                f"from {root}" not in source
+            ), f"{label} unexpectedly imports from web/dashboard module {root!r}"
 
 
 def _server_modules_loaded_by_import(target):
@@ -201,9 +198,9 @@ def _server_modules_loaded_by_import(target):
         capture_output=True,
         text=True,
     )
-    assert completed.returncode == 0, (
-        f"probe importing {target!r} failed: {completed.stderr}"
-    )
+    assert (
+        completed.returncode == 0
+    ), f"probe importing {target!r} failed: {completed.stderr}"
     loaded = completed.stdout.strip()
     return [name for name in loaded.split(",") if name]
 

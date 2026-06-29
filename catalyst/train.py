@@ -173,6 +173,7 @@ def _batch_stream(data, config, max_steps):
 
         def restart():
             return make_batches(dataset, tokenizer, batch_size)
+
     else:
         # An iterator cannot be replayed, so materialize once and re-iterate
         # the cached batches when cycling.
@@ -253,9 +254,7 @@ def train(model, data, config) -> dict:
     ram_sum = 0.0
     last_loss = float("nan")
 
-    for step, batch in enumerate(
-        itertools.chain([first_batch], batches), start=1
-    ):
+    for step, batch in enumerate(itertools.chain([first_batch], batches), start=1):
         start = time.perf_counter()
         optimizer.zero_grad()
         outputs = model(**batch)
@@ -302,8 +301,7 @@ def train(model, data, config) -> dict:
         else float("nan")
     )
     avg_throughput = (
-        sum(entry["throughput_samples_per_sec"] for entry in step_logs)
-        / steps_run
+        sum(entry["throughput_samples_per_sec"] for entry in step_logs) / steps_run
         if steps_run
         else 0.0
     )

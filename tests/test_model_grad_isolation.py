@@ -87,9 +87,9 @@ def test_gradient_isolation_after_injection(rank_by_layer, targets):
     # Direct iteration: no base weight is trainable.
     for name, param in model.named_parameters():
         if id(param) not in adapter_param_ids:
-            assert param.requires_grad is False, (
-                f"Base weight '{name}' leaked a gradient after injection."
-            )
+            assert (
+                param.requires_grad is False
+            ), f"Base weight '{name}' leaked a gradient after injection."
 
     # The dedicated assertion agrees with direct iteration.
     check_grad_leak(model)

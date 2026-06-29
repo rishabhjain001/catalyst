@@ -37,8 +37,11 @@ def test_perplexity_equals_exp_loss(loss):
 
 # Feature: catalyst-lora, Property 13
 @settings(max_examples=200)
-@given(loss=st.floats(min_value=710.0, max_value=1e6, allow_nan=False,
-                      allow_infinity=False))
+@given(
+    loss=st.floats(
+        min_value=710.0, max_value=1e6, allow_nan=False, allow_infinity=False
+    )
+)
 def test_perplexity_overflows_to_inf(loss):
     """Validates: Requirements 12.3, 14.2"""
     # math.exp overflows above ~709.78, where perplexity reports infinity

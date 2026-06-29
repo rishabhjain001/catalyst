@@ -10,7 +10,6 @@ network.
 
 import pytest
 
-import catalyst.data as data
 from catalyst.data import load_sst2
 
 # SST-2 rows expose the review under this column and the binary label under

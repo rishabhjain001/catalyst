@@ -165,8 +165,9 @@ def adapter_matrices(d: int, k: int, rank: int) -> st.SearchStrategy:
 
 
 @st.composite
-def input_batches(draw, k: int, with_seq=None, max_batch: int = MAX_BATCH,
-                  max_seq: int = MAX_SEQ):
+def input_batches(
+    draw, k: int, with_seq=None, max_batch: int = MAX_BATCH, max_seq: int = MAX_SEQ
+):
     """Draw an input tensor whose last dimension is ``k``.
 
     Shape is ``(batch, k)`` or ``(batch, seq, k)`` so both the 2D and the
@@ -185,8 +186,7 @@ def input_batches(draw, k: int, with_seq=None, max_batch: int = MAX_BATCH,
 
 
 @st.composite
-def lora_cases(draw, min_dim: int = MIN_DIM, max_dim: int = MAX_DIM,
-               with_seq=None):
+def lora_cases(draw, min_dim: int = MIN_DIM, max_dim: int = MAX_DIM, with_seq=None):
     """Draw a complete, self-consistent ``LoraCase``.
 
     Bundles a valid shape, a valid rank, an alpha, a base module of one layout,
@@ -203,5 +203,6 @@ def lora_cases(draw, min_dim: int = MIN_DIM, max_dim: int = MAX_DIM,
     A = draw(tensors((rank, k)))
     B = draw(tensors((d, rank)))
     x = draw(input_batches(k, with_seq=with_seq))
-    return LoraCase(d=d, k=k, rank=rank, alpha=alpha, kind=kind, base=base,
-                    A=A, B=B, x=x)
+    return LoraCase(
+        d=d, k=k, rank=rank, alpha=alpha, kind=kind, base=base, A=A, B=B, x=x
+    )
